@@ -40,7 +40,9 @@ class Contract {
 	sendEth(){
 
 	}
-
+	addBeneficiary(address,percent){
+	
+	}
 }
 
 class IoDatabase{
