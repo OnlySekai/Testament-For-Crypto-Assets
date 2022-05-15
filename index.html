@@ -22,7 +22,7 @@
           <a class="nav-link" href="javascript:void(0)">ABOUT US</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="javascript:deployContract()">CREAT NEW CONTRACT</a>
+          <a class="nav-link" href="javascript:deployContract()" id="newContract">CREAT NEW CONTRACT</a>
         </li>
       </ul>
       <form class="d-flex">
@@ -96,16 +96,16 @@
 		</table>
 			<div class="row">
 				<div class="col">
-					<input type="text" class="form-control" placeholder="Input mount" style="margin: 3px;">
-					<button type="button" class="btn btn-outline-danger"style="margin: 3px;">Withdraw</button>
-					<button type="button" class="btn btn-outline-success"style="margin: 3px;">Send to contract</button>
+					<input type="text" if="formMount"class="form-control" placeholder="Input mount" style="margin: 3px;">
+					<button type="button" id="withdraw"class="btn btn-outline-danger"style="margin: 3px;">Withdraw</button>
+					<button type="button" id="sendCoin"class="btn btn-outline-success"style="margin: 3px;">Send to contract</button>
 				</div>
 				<div class="col">
 					<div class="d-grid">
-						<button type="button" class="btn btn-outline-danger btn-block" style="margin: 3px;">ROLL UP</button>
+						<button type="button" id="rollUp"class="btn btn-outline-danger btn-block" style="margin: 3px;">ROLL UP</button>
 					</div>
 					<div class="d-grid">
-						<button type="button" class="btn btn-outline-success btn-block" style="margin: 3px;">EXECUTE TESTAMENT</button>
+						<button type="button" id="executeContract"class="btn btn-outline-success btn-block" style="margin: 3px;">EXECUTE TESTAMENT</button>
 					</div>
 				</div>
 			</div>
@@ -184,11 +184,11 @@
 		</div>
 	</div>
 	<form style="margin-top: 3px">
-		<button class="btn-outline-success btn-sm">
+		<button class="btn-outline-success btn-sm" id="addBeneficiary">
 			Add Beneficiary
 		</button>
-		<input type="text" name="addressBeneficiaries" placeholder="address" size=34>
-		<input type="text" name="mount" placeholder="percent" size="1">
+		<input type="text" id="formAddressBeneficiary"name="addressBeneficiaries" placeholder="address" size=34>
+		<input type="text" id="formPercent" name="mount" placeholder="percent" size="1">
 	</form>
 </div>
 
