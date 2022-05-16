@@ -138,24 +138,18 @@ contract transferCryptoTestament  {
 contract MutiTestament{
     mapping(address=>transferCryptoTestament) testamentOwner;
     address[] owners;
-    address user=msg.sender;
+    address a=0x0000000000000000000000000000000000000000;
     function getTestamentAddress(address _owner) public view returns(transferCryptoTestament){
         return testamentOwner[_owner];
     }
     modifier notExist(address _owner){
-        for(uint i=0;i<owners.length;i++){
-            if (owners[i]==_owner)
-                revert(" Owner had testament ");
-        }
+        require(address(testamentOwner[_owner])==a,"has testament");
         _;
     }
-    function newTestament() public notExist(user) returns(transferCryptoTestament){
-        testamentOwner[user]=new transferCryptoTestament();
-        owners.push(user);
-        return testamentOwner[user];
-    }
-    function getTestamentAddress() public view returns(address[] memory){
-        return owners;
+    function newTestament() public notExist(msg.sender) returns(transferCryptoTestament){
+        testamentOwner[msg.sender]=new transferCryptoTestament();
+        owners.push(msg.sender);
+        return testamentOwner[msg.sender];
     }
 
 }
