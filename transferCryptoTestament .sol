@@ -22,7 +22,7 @@ contract transferCryptoTestament  {
     constructor(){
         cnt=0;
         death=false;
-        owner=msg.sender;
+        owner=tx.origin;
         remain=100;
         checkPoint=block.timestamp+31556926*2;
     }
@@ -49,7 +49,10 @@ contract transferCryptoTestament  {
             return(checkPoint-block.timestamp,"owner was death");
         }
         return(checkPoint-block.timestamp,"owner alive");
-    }    
+    }
+    function getTimeLeft() public view returns(uint leftTime){
+        return checkPoint-block.timestamp;
+    }
     function getMount() public view returns(uint) {
         return address(this).balance;
     }
@@ -95,12 +98,12 @@ contract transferCryptoTestament  {
         }
         beneficiaries[mem]=0;
     }
-    function withdraw(uint _mount) public alive{
+    function withdraw(uint _mount) public payable alive{
         require(_mount<=address(this).balance,"Not enouth");
         payable(owner).transfer(_mount);
         emit updateData("withdraw",owner,_mount);
     }
-    function testament() public wasDeath(){
+    function testament() public payable wasDeath(){
      /*   address tmpAddr;
         uint index=addrBeneficiaries.length;
         while(index>0){
@@ -128,6 +131,31 @@ contract transferCryptoTestament  {
     }
     function turnDeath() public alive onlyOwner{
         death=true;
+    }
+
+}
+
+contract MutiTestament{
+    mapping(address=>transferCryptoTestament) testamentOwner;
+    address[] owners;
+    address user=msg.sender;
+    function getTestamentAddress(address _owner) public view returns(transferCryptoTestament){
+        return testamentOwner[_owner];
+    }
+    modifier notExist(address _owner){
+        for(uint i=0;i<owners.length;i++){
+            if (owners[i]==_owner)
+                revert(" Owner had testament ");
+        }
+        _;
+    }
+    function newTestament() public notExist(user) returns(transferCryptoTestament){
+        testamentOwner[user]=new transferCryptoTestament();
+        owners.push(user);
+        return testamentOwner[user];
+    }
+    function getTestamentAddress() public view returns(address[] memory){
+        return owners;
     }
 
 }
